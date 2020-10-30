@@ -10,13 +10,12 @@ import static robocode.util.Utils.normalRelativeAngleDegrees;
 
 
 public class fnlbot extends Robot {
-	int num = 0;
+	int num = 1;
 	public void run() {
 		setAdjustGunForRobotTurn(true);
 		turnLeft(getHeading());
-//		turnRadarRight(getHeading()- 120);
 		TacticalAvoidance();
-		while (true) {
+		while (num == 1) {
 			turnGunRight(10);
 		}
 	}
@@ -27,16 +26,22 @@ public class fnlbot extends Robot {
 	
 	public void onHitWall(HitWallEvent event) {
        	turnLeft(90);
+       	
 
 	}
 	
+	public void BulletHitEvent() {
+		num = 2;
+		TacticalAvoidance();
+	}
+	
 	public void onScannedRobot(ScannedRobotEvent e) {
-		if (num == 1) {
+		//if (num2 == 2) {
 		    double absoluteBearing = getHeading() + e.getBearing();
 			double bearingFromGun = normalRelativeAngleDegrees(absoluteBearing - getGunHeading());
 			turnGunRight(bearingFromGun);
 			fire(3);
-		}
+		//}
 
 		//turnRadarRight(2.0 * Utils.normalRelativeAngleDegrees(getHeading() + e.getBearing() - getRadarHeading()));
 	    
